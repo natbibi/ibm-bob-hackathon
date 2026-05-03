@@ -4,7 +4,7 @@ This project is created for the [IBM Bob Hackathon](https://compete.052601.watso
 
 Live URL: https://ibm-bob-hackathon-nu.vercel.app/
 
-Video demo URL: https://drive.google.com/file/d/1c9IQEKDH4Qv0-iwzQTXOAVzKIubxBNa8/view
+Video demo URL: https://drive.google.com/file/d/1cVX-2AwJAKP4-LvGPa0LFHvdqWxWzlB5/view?usp=sharing
 
 ## Description 
 CodeGuardian is an intelligent code analysis tool designed to help developers quickly identify security vulnerabilities, assess risk, and improve code quality without the need for time-consuming manual reviews. Developers often lack fast and accessible tools to detect security issues early in the development process. This is the challenge CodeGuardian was created to solve. Reviewing code line by line is time consuming, tedious and also error prone. Exposed secrets, SQL injection risks or insecure patterns can be easily missed especially under time pressures or rapid prototyping. Critical issues can therefore be overlooked until later in the development cycle which can be costly and difficult to fix. The platform supports many programming languages, making it flexible for all developers.
