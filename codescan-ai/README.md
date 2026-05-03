@@ -1,14 +1,14 @@
-# CodeScan AI
+# CodeGuardian AI
 
-AI-powered code vulnerability detection, risk scoring, and smart suggestions using IBM Watson Natural Language Understanding.
+AI-powered code vulnerability detection, risk scoring, and smart suggestions using IBM watsonx.ai (Granite models).
 
 ## 🚀 Features
 
-- **🤖 AI-Powered Analysis** - Leverages IBM Watson NLU for intelligent code analysis
-- **🔍 Vulnerability Detection** - Identifies exposed secrets, SQL injection, XSS, and more
+- **🤖 AI-Powered Analysis** - Leverages IBM Granite AI for intelligent, structured code analysis
+- **🔍 Vulnerability Detection** - Identifies exposed secrets, SQL injection, XSS, weak crypto, and more
 - **📊 Risk Scoring** - Overall health score (0-100) with detailed severity breakdown
-- **💡 Smart Suggestions** - Actionable AI-generated recommendations
-- **📈 Visual Dashboard** - Beautiful charts and metrics for code quality insights
+- **💡 Smart Suggestions** - Actionable AI-generated recommendations with step-by-step plans
+- **📈 Visual Dashboard** - Glassmorphism dark-theme dashboard with charts and metrics
 - **🎯 Multi-Language Support** - Supports 13+ programming languages
 - **⚡ Real-time Processing** - Fast analysis with instant results
 
@@ -19,7 +19,7 @@ AI-powered code vulnerability detection, risk scoring, and smart suggestions usi
 - **Styling**: Tailwind CSS
 - **State Management**: Zustand
 - **Charts**: Recharts
-- **AI/ML**: IBM Watson Natural Language Understanding
+- **AI/ML**: IBM watsonx.ai — Granite models (`ibm/granite-3-8b-instruct`)
 - **Icons**: Lucide React
 - **File Upload**: React Dropzone
 - **ID Generation**: UUID
@@ -27,7 +27,7 @@ AI-powered code vulnerability detection, risk scoring, and smart suggestions usi
 ## 📋 Prerequisites
 
 - Node.js 18+ and npm
-- IBM Watson Natural Language Understanding API credentials
+- IBM watsonx.ai API credentials
 
 ## 🔧 Installation
 
@@ -47,15 +47,15 @@ npm install
 Create a `.env.local` file in the root directory:
 
 ```env
-WATSON_API_KEY=your_watson_api_key
-WATSON_URL=your_watson_service_url
-WATSON_VERSION=2023-07-15
+WATSONX_API_KEY=your_ibm_cloud_api_key
+WATSONX_PROJECT_ID=your_watsonx_project_id
+WATSONX_URL=https://us-south.ml.cloud.ibm.com
 ```
 
-**To get Watson credentials**:
+**To get watsonx credentials**:
 - Sign up for IBM Cloud: https://cloud.ibm.com/
-- Create a Natural Language Understanding service
-- Copy your API key and service URL from the credentials page
+- Create a watsonx.ai project
+- Copy your API key and project ID from the credentials page
 
 4. **Run the development server**:
 ```bash
@@ -74,20 +74,23 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 
 ### 2. Analyze
 - Click "Analyze Code" to start the AI analysis
-- Watson NLU processes your code for vulnerabilities and patterns
-- Fallback rule-based analysis if Watson is unavailable
+- IBM Granite processes your code for vulnerabilities and patterns
+- Fallback rule-based analysis if watsonx is unavailable
 
 ### 3. View Results
 The comprehensive dashboard shows:
 - **Health Score**: Overall code quality (0-100)
-- **Stat Cards**: Key metrics (vulnerabilities, high-risk issues, missing tests)
-- **Severity Breakdown**: Pie chart of critical/high/medium/low issues
-- **Findings Table**: Sortable list of all detected vulnerabilities
-- **AI Suggestions**: Actionable recommendations from Watson
-- **Files Analyzed**: Details of each uploaded file
+- **Stat Cards**: Key metrics (total issues, critical issues, security risk, files analyzed)
+- **Vulnerability Breakdown**: Pie chart of critical/high/medium/low issues
+- **Top Issue Categories**: Ranked categories of detected problems
+- **AI-Powered Insights**: Actionable insights from IBM Granite
+- **Most Critical Issues**: Expandable list with full details and fix recommendations
+- **Code Snippets**: Highlighted vulnerable code with context
+- **AI Recommendations**: Step-by-step remediation plans
+- **Additional Insights**: Code metrics (coverage, duplication, technical debt)
 
 ### 4. Download Report
-- Export analysis results as JSON for record-keeping
+- Click "Download Report" in the navbar to export the full analysis as JSON
 
 ## 🏗️ Project Structure
 
@@ -96,28 +99,22 @@ codescan-ai/
 ├── app/
 │   ├── api/
 │   │   └── analyze/
-│   │       └── route.ts          # Watson API proxy + analysis logic
+│   │       └── route.ts          # watsonx API proxy + analysis logic
 │   ├── dashboard/
 │   │   └── page.tsx              # Results dashboard
-│   ├── globals.css               # Global styles
+│   ├── upload/
+│   │   └── page.tsx              # File upload page
+│   ├── globals.css               # Global styles & animations
 │   ├── layout.tsx                # Root layout
-│   └── page.tsx                  # Landing/upload page
-├── components/
-│   └── Dashboard/
-│       ├── FindingsTable.tsx     # Sortable vulnerabilities table
-│       ├── HealthRing.tsx        # Animated health score ring
-│       ├── SeverityChart.tsx     # Pie chart with severity breakdown
-│       ├── StatCards.tsx         # KPI metric cards
-│       └── SuggestionsList.tsx   # AI suggestions panel
+│   └── page.tsx                  # Landing page
 ├── lib/
-│   ├── codeParser.ts             # File parsing utilities
 │   ├── store.ts                  # Zustand state management
-│   └── watsonClient.ts           # Watson API client
+│   └── watsonClient.ts           # watsonx.ai Granite client
 ├── types/
 │   └── analysis.ts               # TypeScript interfaces
-├── .env.local                    # Environment variables
+├── .env.local                    # Environment variables (not committed)
 ├── next.config.js                # Next.js configuration
-├── tailwind.config.ts            # Tailwind CSS configuration
+├── tailwind.config.js            # Tailwind CSS configuration
 └── tsconfig.json                 # TypeScript configuration
 ```
 
@@ -128,20 +125,8 @@ codescan-ai/
 - **Danger**: `#EF4444` (Red)
 - **Warning**: `#F59E0B` (Amber)
 - **Success**: `#10B981` (Green)
-- **Background**: `#0F0F1A` (Dark)
-- **Card**: `#1E1E2E` (Dark Gray)
-
-### Language Badge Colors
-- Python: Blue
-- JavaScript: Yellow
-- TypeScript: Blue
-- Java: Orange
-- Go: Cyan
-- Ruby: Red
-- Rust: Orange
-- PHP: Purple
-- C#: Green
-- C++: Pink
+- **Background**: `#07070F` (Deep Dark)
+- **Card**: `#0F0F1A` (Dark)
 
 ## 🔍 Vulnerability Categories
 
@@ -150,9 +135,11 @@ The analyzer detects:
 - **SQL Injection**: Unsafe database queries
 - **XSS**: Cross-site scripting vulnerabilities
 - **Hardcoded Credentials**: Passwords in code
+- **Weak Cryptography**: MD5, SHA1, insecure algorithms
 - **Missing Authentication**: Unprotected routes
-- **Dependency Issues**: Outdated or vulnerable packages
-- **Other**: General code quality issues
+- **Input Validation**: Missing sanitization
+- **Code Smells**: Long functions, dead code, TODO comments
+- **Best Practices**: Security headers, error handling
 
 ## 📊 Severity Levels
 
@@ -160,15 +147,6 @@ The analyzer detects:
 - **High**: Significant vulnerability (10 points deduction)
 - **Medium**: Moderate issue (5 points deduction)
 - **Low**: Minor concern (minimal impact)
-
-## 🧪 Analysis Process
-
-1. **File Upload**: Files are read and metadata extracted (language, LOC)
-2. **Watson Analysis**: Code sent to Watson NLU for AI analysis
-3. **Pattern Detection**: Keywords analyzed for security issues
-4. **Fallback Analysis**: Rule-based detection if Watson unavailable
-5. **Score Calculation**: Health score computed from findings
-6. **Results Display**: Comprehensive dashboard with all metrics
 
 ## 🚀 Build for Production
 
@@ -181,9 +159,9 @@ npm start
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `WATSON_API_KEY` | IBM Watson API key | Yes |
-| `WATSON_URL` | Watson service URL | Yes |
-| `WATSON_VERSION` | Watson API version | Yes |
+| `WATSONX_API_KEY` | IBM Cloud API key | Yes |
+| `WATSONX_PROJECT_ID` | watsonx.ai project ID | Yes |
+| `WATSONX_URL` | watsonx.ai endpoint URL | Yes |
 
 ## 🤝 Contributing
 
@@ -193,17 +171,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 MIT
 
-## 🙏 Acknowledgments
-
-- IBM Watson for Natural Language Understanding
-- Next.js team for the amazing framework
-- Tailwind CSS for the utility-first CSS framework
-- Recharts for beautiful charts
-
-## 📞 Support
-
-For issues and questions, please open an issue on GitHub.
-
 ---
 
-**Built with ❤️ using IBM Watson AI**
+**Built with ❤️ using IBM watsonx.ai (Granite)**

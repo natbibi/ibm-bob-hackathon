@@ -1,4 +1,4 @@
-# 🔍 CodeScan AI - Enhanced Logging Output
+# 🔍 CodeGuardian AI - Enhanced Logging Output
 
 ## What You'll See in Your Console/Terminal
 
